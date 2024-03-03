@@ -45,19 +45,32 @@ function displayTemperature(response) {
   let temperatureElement = document.querySelector("#current-temperature")
   let temperature = Math.round(response.data.temperature.current)
   let cityElement = document.querySelector("#current-city")
+  let weatherDescription = document.querySelector("#weather-description")
+  let humidityElement = document.querySelector("#humidity")
+  let windSpeed = document.querySelector("#wind-speed")
+
   cityElement.innerHTML = response.data.city
-  temperatureElement.innerHTML = temperature
+  weatherDescription.innerHTML = response.data.condition.description
+  humidityElement.innerHTML = `${response.data.temperature.humidity}%`
+  windSpeed.innerHTML = `${response.data.wind.speed}km/h`
+
+  temperatureElement.innerHTML = Math.round(temperature)
 }
-function search(event) {
-  event.preventDefault()
-  let searchInputElement = document.querySelector("#search-input")
-  let city = searchInputElement.value
+
+function searchCity(city) {
 
   let apiKey = "78f3071a140683cd3aot3e0bc84c340d"
   let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=metric`
 
   axios.get(apiUrl).then(displayTemperature)
 }
+
+function search(event) {
+  event.preventDefault()
+  let searchInputElement = document.querySelector("#search-input")
+  searchCity(searchInputElement.value)
+}
+searchCity("Kiev");
 
 function formatDate(date) {
   let minutes = date.getMinutes()
@@ -93,6 +106,7 @@ let currentDateELement = document.querySelector("#current-date")
 let currentDate = new Date()
 
 currentDateELement.innerHTML = formatDate(currentDate)
+
 
 
 
