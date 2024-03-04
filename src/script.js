@@ -57,6 +57,8 @@ function displayTemperature(response) {
 
   temperatureElement.innerHTML = Math.round(temperature)
   iconElement.innerHTML = `<img src="${response.data.condition.icon_url}" class="current-temperature-icon" />`
+
+  getForecast(response.data.city)
 }
 
 function searchCity(city) {
@@ -73,7 +75,6 @@ function search(event) {
   searchCity(searchInputElement.value)
 }
 
-searchCity("Kiev")
 
 function formatDate(date) {
   let minutes = date.getMinutes()
@@ -102,6 +103,38 @@ function formatDate(date) {
   return `${formattedDay} ${hours}:${minutes}`
 }
 
+function getForecast(city) {
+  let apiKey = "78f3071a140683cd3aot3e0bc84c340d"
+  let apiUrl = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}&units=metric`
+
+  axios(apiUrl).then(displayForecast)
+}
+
+function displayForecast(response) {
+
+  let days = ['Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+  let forecastHtml = ""
+
+  days.forEach(function (day) {
+    forecastHtml =
+      forecastHtml +
+  `
+  <div class="forecast-weather-day">
+    <div class="forecast-weather-date">${day}</div>
+    <div class="forecast-weather-icon">🌤️</div>
+    <div class="forecast-weather-temperatures">
+      <div class="forecast-weather-temperature">
+        <strong>15º</strong>
+      </div>
+      <div class="forecast-weather-temperature">9º</div>
+    </div>
+    </div>
+`
+  })
+  let forecastElement = document.querySelector("#forecast")
+  forecastElement.innerHTML = forecastHtml
+}
+
 let searchForm = document.querySelector("#search-form")
 searchForm.addEventListener("submit", search)
 
@@ -109,6 +142,10 @@ let currentDateELement = document.querySelector("#current-date")
 let currentDate = new Date()
 
 currentDateELement.innerHTML = formatDate(currentDate)
+
+searchCity("Kiev")
+
+
 
 
 
