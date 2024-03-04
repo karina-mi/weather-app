@@ -48,6 +48,7 @@ function displayTemperature(response) {
   let weatherDescription = document.querySelector("#weather-description")
   let humidityElement = document.querySelector("#humidity")
   let windSpeed = document.querySelector("#wind-speed")
+  let iconElement = document.querySelector("#icon")
 
   cityElement.innerHTML = response.data.city
   weatherDescription.innerHTML = response.data.condition.description
@@ -55,6 +56,7 @@ function displayTemperature(response) {
   windSpeed.innerHTML = `${response.data.wind.speed}km/h`
 
   temperatureElement.innerHTML = Math.round(temperature)
+  iconElement.innerHTML = `<img src="${response.data.condition.icon_url}" class="weather-app-icon" />`
 }
 
 function searchCity(city) {
@@ -70,7 +72,8 @@ function search(event) {
   let searchInputElement = document.querySelector("#search-input")
   searchCity(searchInputElement.value)
 }
-searchCity("Kiev");
+
+searchCity("Kiev")
 
 function formatDate(date) {
   let minutes = date.getMinutes()
