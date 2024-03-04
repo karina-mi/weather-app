@@ -75,6 +75,11 @@ function search(event) {
   searchCity(searchInputElement.value)
 }
 
+function formatDay(timestamp) {
+  let date = new Date(timestamp * 1000)
+  let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+  return days[date.getDay()]
+}
 
 function formatDate(date) {
   let minutes = date.getMinutes()
@@ -112,24 +117,27 @@ function getForecast(city) {
 
 function displayForecast(response) {
 
-  let days = ['Tue', 'Wed', 'Thu', 'Fri', 'Sat']
   let forecastHtml = ""
 
-  days.forEach(function (day) {
-    forecastHtml =
-      forecastHtml +
-  `
+  response.data.daily.forEach(function (day, index) {
+    if (index < 6) {
+      forecastHtml =
+        forecastHtml +
+        `
   <div class="forecast-weather-day">
-    <div class="forecast-weather-date">${day}</div>
-    <div class="forecast-weather-icon">🌤️</div>
+    <div class="forecast-weather-date">${formatDay(day.time)}</div>
+   
+    <img src="${day.condition.icon_url}" class="forecast-weather-icon"/>
+
     <div class="forecast-weather-temperatures">
       <div class="forecast-weather-temperature">
-        <strong>15º</strong>
+        <strong>${Math.round(day.temperature.maximum)}º</strong>
       </div>
-      <div class="forecast-weather-temperature">9º</div>
+      <div class="forecast-weather-temperature">${Math.round(day.temperature.minimum)}º</div>
     </div>
     </div>
 `
+    }
   })
   let forecastElement = document.querySelector("#forecast")
   forecastElement.innerHTML = forecastHtml
