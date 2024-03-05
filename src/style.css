@@ -1,5 +1,5 @@
 body {
-    background: #f9f7fe;
+    background: #fdf6ff;
     font-family: "Roboto", sans-serif;
 }
 
@@ -12,8 +12,8 @@ a {
     max-width: 600px;
     margin: 60px auto;
     padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 30px 50px rgba(65, 50, 100, 0.08);
+    border-radius: 5%;
+    box-shadow: 7px 7px 13px 10px rgba(65, 50, 100, 0.08);
 }
 
 header {
@@ -28,7 +28,7 @@ header {
     font-size: 16px;
     padding: 20px;
     width: 75%;
-    border-radius: 6px;
+    border-radius: 18px 0 0 18px;
 }
 
 .search-button {
@@ -39,7 +39,12 @@ header {
     border: none;
     padding: 20px;
     line-height: 1;
-    border-radius: 5px;
+    border-radius: 0 18px 18px 0;
+}
+
+.search-button:hover {
+    cursor: pointer;
+    background-color: #7858ab;
 }
 
 main {
